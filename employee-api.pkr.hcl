@@ -39,8 +39,8 @@ build {
       # Clone your repo
       "git clone https://github.com/snehajoshi060/Microservices.git /opt/Microservices",
 
-      # Build the Go binary using Go modules (single line to preserve env)
-      "cd /opt/Microservices/employee-api && GO111MODULE=on /usr/local/go/bin/go build -o employee-api .",
+      # Build the Go binary using Go modules (final fix)
+      "cd /opt/Microservices/employee-api && /usr/local/go/bin/go build -mod=mod -o employee-api .",
       "sudo chmod +x /opt/Microservices/employee-api/employee-api",
 
       # Create a systemd service
