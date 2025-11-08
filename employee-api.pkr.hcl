@@ -36,11 +36,15 @@ build {
       "sudo mkdir -p /opt/Microservices",
       "sudo chown -R ubuntu:ubuntu /opt/Microservices",
 
-      # Clone the repo
+      # Clone repo
       "git clone -b main --single-branch https://github.com/snehajoshi060/Microservices.git /opt/Microservices",
 
-      # Build only the employee-api folder using Go modules
-      "cd /opt/Microservices/employee-api && /usr/local/go/bin/go build -mod=mod -o employee-api",
+      # If no go.mod in employee-api, init module
+      "cd /opt/Microservices/employee-api || exit 1",
+      "if [ ! -f go.mod ]; then /usr/local/go/bin/go mod init employee-api; fi",
+
+      # Build Go binary
+      "/usr/local/go/bin/go build -mod=mod -o employee-api",
       "sudo chmod +x /opt/Microservices/employee-api/employee-api",
 
       # Create systemd service
