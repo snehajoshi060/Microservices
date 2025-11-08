@@ -10,11 +10,11 @@ packer {
 }
 
 source "amazon-ebs" "employee_api" {
-  region            = "ap-south-1"
-  source_ami        = "ami-0f115dbaf1a9a8222"
-  instance_type     = "t2.micro"
-  ssh_username      = "ubuntu"
-  ami_name          = "employee-api-{{timestamp}}"
+  region        = "ap-south-1"
+  source_ami    = "ami-0f115dbaf1a9a8222"
+  instance_type = "t2.micro"
+  ssh_username  = "ubuntu"
+  ami_name      = "employee-api-{{timestamp}}"
 }
 
 build {
@@ -32,15 +32,15 @@ build {
       "echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a /etc/profile",
       "export PATH=$PATH:/usr/local/go/bin",
 
-      # Clone your repo (change to your actual GitHub repo!)
-      "git clone https://github.com/snehajoshi060/employee-api.git /opt/employee-api",
+      # Clone your repo
+      "git clone https://github.com/snehajoshi060/Microservices.git /opt/Microservices",
 
       # Build the Go binary
-      "cd /opt/employee-api && /usr/local/go/bin/go build -o employee-api main.go",
-      "sudo chmod +x /opt/employee-api/employee-api",
+      "cd /opt/Microservices/employee-api && /usr/local/go/bin/go build -o employee-api main.go",
+      "sudo chmod +x /opt/Microservices/employee-api/employee-api",
 
       # Create a systemd service
-      "sudo bash -c 'cat > /etc/systemd/system/employee-api.service <<EOF\n[Unit]\nDescription=Employee API Service\nAfter=network.target\n\n[Service]\nWorkingDirectory=/opt/employee-api\nExecStart=/opt/employee-api/employee-api\nRestart=always\nUser=ubuntu\nEnvironment=PORT=8080\n\n[Install]\nWantedBy=multi-user.target\nEOF'",
+      "sudo bash -c 'cat > /etc/systemd/system/employee-api.service <<EOF\n[Unit]\nDescription=Employee API Service\nAfter=network.target\n\n[Service]\nWorkingDirectory=/opt/Microservices/employee-api\nExecStart=/opt/Microservices/employee-api/employee-api\nRestart=always\nUser=ubuntu\nEnvironment=PORT=8080\n\n[Install]\nWantedBy=multi-user.target\nEOF'",
 
       # Enable service
       "sudo systemctl daemon-reload",
