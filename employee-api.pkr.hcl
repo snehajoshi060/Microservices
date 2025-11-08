@@ -36,14 +36,14 @@ build {
       "sudo mkdir -p /opt/Microservices",
       "sudo chown -R ubuntu:ubuntu /opt/Microservices",
 
-      # Clone your repo
-      "git clone https://github.com/snehajoshi060/Microservices.git /opt/Microservices",
+      # Clone the repo
+      "git clone -b main --single-branch https://github.com/snehajoshi060/Microservices.git /opt/Microservices",
 
-      # Build the Go binary using Go modules (final fix)
-      "cd /opt/Microservices/employee-api && /usr/local/go/bin/go build -mod=mod -o employee-api .",
+      # Build only the employee-api folder using Go modules
+      "cd /opt/Microservices/employee-api && /usr/local/go/bin/go build -mod=mod -o employee-api",
       "sudo chmod +x /opt/Microservices/employee-api/employee-api",
 
-      # Create a systemd service
+      # Create systemd service
       "sudo bash -c 'cat > /etc/systemd/system/employee-api.service <<EOF\n[Unit]\nDescription=Employee API Service\nAfter=network.target\n\n[Service]\nWorkingDirectory=/opt/Microservices/employee-api\nExecStart=/opt/Microservices/employee-api/employee-api\nRestart=always\nUser=ubuntu\nEnvironment=PORT=8080\n\n[Install]\nWantedBy=multi-user.target\nEOF'",
 
       # Enable service
