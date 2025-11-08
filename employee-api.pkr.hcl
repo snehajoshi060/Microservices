@@ -32,6 +32,10 @@ build {
       "echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a /etc/profile",
       "export PATH=$PATH:/usr/local/go/bin",
 
+      # Create directory with sudo and set ownership
+      "sudo mkdir -p /opt/Microservices",
+      "sudo chown -R ubuntu:ubuntu /opt/Microservices",
+
       # Clone your repo
       "git clone https://github.com/snehajoshi060/Microservices.git /opt/Microservices",
 
